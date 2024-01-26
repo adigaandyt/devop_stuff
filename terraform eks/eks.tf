@@ -29,8 +29,8 @@ resource "aws_eks_cluster" "mycluster" {
 
   vpc_config {
     subnet_ids = [
-      aws_subnet.mysubnet1.id,
-      aws_subnet.mysubnet2.id,
+      # aws_subnet.mysubnet1.id,
+      # aws_subnet.mysubnet2.id,
       aws_subnet.mysubnet3.id,
       aws_subnet.mysubnet4.id
     ]

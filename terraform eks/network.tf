@@ -21,31 +21,31 @@ resource "aws_internet_gateway" "my_igw" {
   }
 }
 
-#>Subnet 1 priv
-resource "aws_subnet" "mysubnet1" {
-  vpc_id            = aws_vpc.myvpc.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "${var.aws_region}a"
+# #>Subnet 1 priv
+# resource "aws_subnet" "mysubnet1" {
+#   vpc_id            = aws_vpc.myvpc.id
+#   cidr_block        = "10.0.1.0/24"
+#   availability_zone = "${var.aws_region}a"
 
-  tags = {
-    Name                                 = "andy-subnet-private-1"
-    "kubernetes.io/role/internal-elb"    = "1"     # Tag for load balancer on private subnet
-    "kubernetes.io/cluster/andy-cluster" = "owned" # might need to be shared to access mongodb
-  }
-}
+#   tags = {
+#     Name                                 = "andy-subnet-private-1"
+#     "kubernetes.io/role/internal-elb"    = "1"     # Tag for load balancer on private subnet
+#     "kubernetes.io/cluster/andy-cluster" = "owned" # might need to be shared to access mongodb
+#   }
+# }
 
-#>Subnet 2 priv
-resource "aws_subnet" "mysubnet2" {
-  vpc_id            = aws_vpc.myvpc.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "${var.aws_region}b"
+# #>Subnet 2 priv
+# resource "aws_subnet" "mysubnet2" {
+#   vpc_id            = aws_vpc.myvpc.id
+#   cidr_block        = "10.0.2.0/24"
+#   availability_zone = "${var.aws_region}b"
 
-  tags = {
-    Name                                 = "andy-subnet-private-2"
-    "kubernetes.io/role/internal-elb"    = "1"     # Tag for load balancer on private subnet
-    "kubernetes.io/cluster/andy-cluster" = "owned" # might need to be shared to access mongodb
-  }
-}
+#   tags = {
+#     Name                                 = "andy-subnet-private-2"
+#     "kubernetes.io/role/internal-elb"    = "1"     # Tag for load balancer on private subnet
+#     "kubernetes.io/cluster/andy-cluster" = "owned" # might need to be shared to access mongodb
+#   }
+# }
 
 #>Subnet 3 pub
 resource "aws_subnet" "mysubnet3" {
@@ -75,41 +75,41 @@ resource "aws_subnet" "mysubnet4" {
   }
 }
 
-#>NAT Gateway
-resource "aws_eip" "nat" {
+# #>NAT Gateway
+# resource "aws_eip" "nat" {
 
-  domain = "vpc"
+#   domain = "vpc"
 
-  tags = {
-    Name = "andy-NAT"
-  }
-}
+#   tags = {
+#     Name = "andy-NAT"
+#   }
+# }
 
-resource "aws_nat_gateway" "natgate" {
-  allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.mysubnet3.id
+# resource "aws_nat_gateway" "natgate" {
+#   allocation_id = aws_eip.nat.id
+#   subnet_id     = aws_subnet.mysubnet3.id
 
-  tags = {
-    Name = "andy-nat"
-  }
+#   tags = {
+#     Name = "andy-nat"
+#   }
 
-  depends_on = [aws_internet_gateway.my_igw]
-}
+#   depends_on = [aws_internet_gateway.my_igw]
+# }
 
 #>Route Table
 
-resource "aws_route_table" "rt-private" {
-  vpc_id = aws_vpc.myvpc.id
+# resource "aws_route_table" "rt-private" {
+#   vpc_id = aws_vpc.myvpc.id
 
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.natgate.id
-  }
+#   route {
+#     cidr_block     = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.natgate.id
+#   }
 
-  tags = {
-    Name = "andy-route-table-private"
-  }
-}
+#   tags = {
+#     Name = "andy-route-table-private"
+#   }
+# }
 
 resource "aws_route_table" "rt-public" {
   vpc_id = aws_vpc.myvpc.id
@@ -126,14 +126,14 @@ resource "aws_route_table" "rt-public" {
 }
 
 #>Association subnets with route tables
-resource "aws_route_table_association" "subnet_association_subnet1" {
-  subnet_id      = aws_subnet.mysubnet1.id
-  route_table_id = aws_route_table.rt-private.id
-}
-resource "aws_route_table_association" "subnet_association_subnet2" {
-  subnet_id      = aws_subnet.mysubnet2.id
-  route_table_id = aws_route_table.rt-private.id
-}
+# resource "aws_route_table_association" "subnet_association_subnet1" {
+#   subnet_id      = aws_subnet.mysubnet1.id
+#   route_table_id = aws_route_table.rt-private.id
+# }
+# resource "aws_route_table_association" "subnet_association_subnet2" {
+#   subnet_id      = aws_subnet.mysubnet2.id
+#   route_table_id = aws_route_table.rt-private.id
+# }
 resource "aws_route_table_association" "subnet_association_subnet3" {
   subnet_id      = aws_subnet.mysubnet3.id
   route_table_id = aws_route_table.rt-public.id

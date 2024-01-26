@@ -32,16 +32,22 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   role       = aws_iam_role.nodes.name
 }
 
+#EBS CSI plugin IAM role 
+resource "aws_iam_role_policy_attachment" "nodes-AmazonEBSCSIDriverPolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+  role       = aws_iam_role.nodes.name
+}
+
 #>Node group
-resource "aws_eks_node_group" "private-nodes" {
+resource "aws_eks_node_group" "public-nodes" {
   cluster_name    = aws_eks_cluster.mycluster.name
-  node_group_name = "private-nodes"
+  node_group_name = "public-nodes"
   node_role_arn   = aws_iam_role.nodes.arn
 
   # Replace with public subnets to get nodes with public IPs
   subnet_ids = [
-    aws_subnet.mysubnet1.id,
-    aws_subnet.mysubnet2.id
+    aws_subnet.mysubnet3.id,
+    aws_subnet.mysubnet4.id
   ]
 
   capacity_type  = "ON_DEMAND"
