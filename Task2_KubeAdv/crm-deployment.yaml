@@ -1,5 +1,4 @@
 apiVersion: apps/v1
-apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-crm
@@ -19,10 +18,14 @@ spec:
           ports:
             - containerPort: 3000
           envFrom:
-            - configMapRef:
-                name: demo-crm-conf
-            - secretRef:
-                name: mongodb-secret
+          - configMapRef:
+              name: demo-crm-conf
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGODB_URI
           resources:
             limits:
               cpu: 500m  # 0.5 CPU cores

@@ -1,1 +1,5 @@
 echo -n "your_root_password_here" | base64
+mongodb://lior:levi@mongodb-headless.default.svc.cluster.local:27017/mydatabase?replicaSet=rs0
+
+mongodb://myuser:mypass@mongodb-headless.default.svc.cluster.local:27017/mydb?replicaSet=rs0
+bW9uZ29kYjovL2xpb3I6bGV2aUBtb25nb2RiLWhlYWRsZXNzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWw6MjcwMTcvbXlkYXRhYmFzZT9yZXBsaWNhU2V0PXJzMA==

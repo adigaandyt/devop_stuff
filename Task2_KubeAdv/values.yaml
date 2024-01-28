@@ -1,10 +1,9 @@
-architecture : "replicaset"
-replicaSet:
-  enabled: true
-  name: "rs0" 
-  replicaCount: 3
+architecture: "replicaset"
+replicaCount: 3
 auth:
   enabled: true
-  existingSecret: mongodb-secret
+  usernames: ["myuser"]
+  passwords: ["mypass"]
+  databases: ["mydb"]
 persistence:
   enabled: true
