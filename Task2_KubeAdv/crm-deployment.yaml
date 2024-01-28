@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-crm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-crm
+  template:
+    metadata:
+      labels:
+        app: demo-crm
+    spec:
+      containers:
+        - name: demo-crm
+          image: pwstaging/demo-crm:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: demo-crm-conf
+            - secretRef:
+                name: mongodb-secret
+          resources:
+            limits:
+              cpu: 500m  # 0.5 CPU cores
+              memory: 512Mi  # 512 MiB of memory

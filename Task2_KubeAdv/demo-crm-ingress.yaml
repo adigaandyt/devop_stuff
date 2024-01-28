@@ -4,7 +4,7 @@ metadata:
   name: demo-crm
 spec:
   rules:
-  - host: andythaok.com  # change this to *your* DNS name!
+  - host: ourlib.ddns.net  # change this to *your* DNS name! # ourlib.ddns.net
     http:
       paths:
       - backend:
