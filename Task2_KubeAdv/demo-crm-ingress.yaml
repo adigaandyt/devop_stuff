@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-crm
+spec:
+  rules:
+  - host: andythaok.com  # change this to *your* DNS name!
+    http:
+      paths:
+      - backend:
+          service:
+            name: demo-crm-service  # make sure this matches *your* Demo CRM's service name!
+            port:
+              number: 3000  # make sure this matches *your* Demo CRM's service port!
+        path: /
+        pathType: Prefix
